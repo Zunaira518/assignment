@@ -1,0 +1,3 @@
+replicaCount: 1
+webPageContent: "Hello World"
+vaultEnabled: false

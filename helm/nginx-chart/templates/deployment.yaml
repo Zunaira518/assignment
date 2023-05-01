@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          env:
+            - name: WEB_CONTENT
+              value: "{{ .Values.webContent }}"
+          {{- if .Values.vaultEnabled }}
+        - name: vault
+          image: hashicorp/vault
+          ports:
+            - containerPort: 8200
+          {{- end }}
+
